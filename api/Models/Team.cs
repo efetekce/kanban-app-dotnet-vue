@@ -8,7 +8,10 @@ namespace api.obj.Models
     public class Team
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
-        public List<User> Users { get; set; }
+        public string Name { get; set; }
+
+
+        public List<AppUser> AppUsers { get; set; }
+        public List<Todo> Todos { get; set; }
     }
 }
