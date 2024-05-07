@@ -1,5 +1,6 @@
 using api.Data;
-using api.obj.Models;
+using api.Models;
+using api.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -49,7 +50,9 @@ builder.Services.AddAuthentication(options =>
 }
 );
 
-
+builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+// builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+builder.Services.AddAuthorization();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

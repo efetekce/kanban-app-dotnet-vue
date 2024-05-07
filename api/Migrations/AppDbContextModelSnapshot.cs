@@ -229,7 +229,7 @@ namespace api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("api.obj.Models.Team", b =>
+            modelBuilder.Entity("api.Models.Team", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -246,7 +246,7 @@ namespace api.Migrations
                     b.ToTable("Teams");
                 });
 
-            modelBuilder.Entity("api.obj.Models.Todo", b =>
+            modelBuilder.Entity("api.Models.Todo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -287,7 +287,7 @@ namespace api.Migrations
                     b.ToTable("Todos");
                 });
 
-            modelBuilder.Entity("api.obj.Models.AppUser", b =>
+            modelBuilder.Entity("api.Models.AppUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
@@ -350,15 +350,15 @@ namespace api.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("api.obj.Models.Todo", b =>
+            modelBuilder.Entity("api.Models.Todo", b =>
                 {
-                    b.HasOne("api.obj.Models.AppUser", "AppUser")
+                    b.HasOne("api.Models.AppUser", "AppUser")
                         .WithMany("Todos")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("api.obj.Models.Team", "Team")
+                    b.HasOne("api.Models.Team", "Team")
                         .WithMany("Todos")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -369,23 +369,23 @@ namespace api.Migrations
                     b.Navigation("Team");
                 });
 
-            modelBuilder.Entity("api.obj.Models.AppUser", b =>
+            modelBuilder.Entity("api.Models.AppUser", b =>
                 {
-                    b.HasOne("api.obj.Models.Team", "Team")
+                    b.HasOne("api.Models.Team", "Team")
                         .WithMany("AppUsers")
                         .HasForeignKey("TeamId");
 
                     b.Navigation("Team");
                 });
 
-            modelBuilder.Entity("api.obj.Models.Team", b =>
+            modelBuilder.Entity("api.Models.Team", b =>
                 {
                     b.Navigation("AppUsers");
 
                     b.Navigation("Todos");
                 });
 
-            modelBuilder.Entity("api.obj.Models.AppUser", b =>
+            modelBuilder.Entity("api.Models.AppUser", b =>
                 {
                     b.Navigation("Todos");
                 });
