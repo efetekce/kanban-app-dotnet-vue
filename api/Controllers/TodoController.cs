@@ -23,6 +23,13 @@ namespace api.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var result = await _todoRepository.GetAllAsync();
+            return Ok(result);
+        }
+
         [HttpGet("{appUserId:string}")]
         public async Task<IActionResult> GetAllByAppUserIdAsync([FromRoute] string appUserId)
         {

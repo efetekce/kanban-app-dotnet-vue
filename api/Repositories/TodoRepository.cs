@@ -16,6 +16,12 @@ namespace api.Repositories
         {
             _context = context;
         }
+
+        public  Task<List<Todo>> GetAllAsync()
+        {
+            return  _context.Todos.ToListAsync();
+        }
+
         public Task<List<Todo>> GetAllByAppUserIdAsync(string appUserId)
         {
             return _context.Todos.Where(t => t.AppUserId == appUserId).ToListAsync();
