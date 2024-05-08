@@ -11,7 +11,7 @@ const isCompleted = ref(false);
   >
     <div
       :class="{
-        'line-through last:no-underline': isCompleted,
+        'line-through': isCompleted,
         'bg-opacity-80': !isCompleted,
       }"
     >
@@ -31,19 +31,19 @@ const isCompleted = ref(false);
         type="checkbox"
         name="isCompleted"
         v-model="isCompleted"
-        class="top-2 right-2 absolute size-5"
+        class="top-2 right-2 absolute cursor-pointer size-5"
       />
     </div>
-    <p v-show="isCompleted" class="">
+    <p v-if="isCompleted" class="">
       Completed On:
 
       <span>{{
-        new Date().toLocaleString("en-us", {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
+        new Date().toLocaleString("en-gb", {
+          month: "2-digit",
+          day: "2-digit",
+          year: "2-digit",
           hour: "2-digit",
-          minute: "numeric",
+          minute: "2-digit",
           hour12: false,
         })
       }}</span>
