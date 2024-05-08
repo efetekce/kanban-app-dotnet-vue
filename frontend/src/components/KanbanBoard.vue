@@ -1,9 +1,16 @@
 <script setup>
-const loading = ref(false);
+import KanbanCard from "./KanbanCard.vue";
+
+// const loading = ref(false);
 </script>
 
 <template>
-  <div>hello KanbanBoard</div>
+  <div class="gap-4 grid grid-cols-1 bg-teal-400 p-4 rounded-xl">
+    Done
+    <KanbanCard />
+    <KanbanCard />
+    <KanbanCard />
+  </div>
 </template>
 
 <style scoped></style>
