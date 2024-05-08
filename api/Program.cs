@@ -1,6 +1,7 @@
 using api.Data;
 using api.Models;
 using api.Repositories;
+using api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 Console.Write(builder.Configuration.GetConnectionString("SQLServerConnectionString"));
@@ -53,7 +55,9 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
-builder.Services.AddAuthorization();
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+// builder.Services.AddAuthorization();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -72,7 +76,8 @@ app.UseCors(x => x
     .SetIsOriginAllowed(origin => true)
 );
 app.UseAuthentication();
-app.UseAuthorization();
+// app.UseAuthorization();
 
+app.MapControllers();
 app.Run();
 

@@ -18,8 +18,7 @@ namespace api.Repositories
 
         public async Task<List<Team>> GetAllAsync()
         {
-            var teams = _context.Teams.Include(t => t.Name).AsQueryable();
-            return await teams.ToListAsync();
+            return await _context.Teams.ToListAsync();
         }
 
     }

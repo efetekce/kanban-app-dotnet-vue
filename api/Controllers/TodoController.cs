@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
+using api.Extensions;
+using api.Models;
 using api.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -13,11 +16,13 @@ namespace api.Controllers
     public class TodoController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
         private readonly ITodoRepository _todoRepository;
 
-        public TodoController(AppDbContext context, ITodoRepository todoRepository)
+        public TodoController(UserManager<AppUser> userManager, AppDbContext context, ITodoRepository todoRepository)
         {
+            _userManager = userManager;
             _context = context;
             _todoRepository = todoRepository;
 
@@ -30,10 +35,12 @@ namespace api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{appUserId:string}")]
-        public async Task<IActionResult> GetAllByAppUserIdAsync([FromRoute] string appUserId)
+        [HttpGet("getallbyuserid")]
+        public async Task<IActionResult> GetAllByAppUserIdAsync()
         {
-            var result = await _todoRepository.GetAllByAppUserIdAsync(appUserId);
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+            var result = await _todoRepository.GetAllByAppUserIdAsync(appUser.Id);
             return Ok(result);
 
         }
