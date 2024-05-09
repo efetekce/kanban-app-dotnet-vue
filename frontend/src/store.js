@@ -1,8 +1,15 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
 
 export const useAccountStore = defineStore("account", () => {
-  const account = ref(null);
+  const isLoggedIn = ref(false);
+
+  const account = reactive({
+    username: "",
+    email: "",
+    token: "",
+  });
 
   const accountRegister = () => {
     fetch("http://localhost:5108/api/account/login", {
@@ -11,8 +18,6 @@ export const useAccountStore = defineStore("account", () => {
   };
 
   const accountLogin = async ({ username, password }) => {
-    console.log("login bu");
-
     try {
       const response = await fetch("http://localhost:5108/api/account/login", {
         method: "post",
@@ -22,11 +27,18 @@ export const useAccountStore = defineStore("account", () => {
           password: password,
         }),
       });
-      console.log(response);
-      return response;
+      const data = await response.json();
+      console.log(data);
+      account.email = data.email;
+      account.token = data.token;
+      account.username = data.username;
     } catch (error) {
       console.error(error);
     }
   };
-  return { account, accountLogin, accountRegister };
+
+  const accountLogout = () => {
+    account = {};
+  };
+  return { account, accountLogin, accountRegister, accountLogout, isLoggedIn };
 });
