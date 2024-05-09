@@ -1,13 +1,17 @@
 <script setup>
 import { ref } from "vue";
+import { useAccountStore } from "../store";
 
 const isCompleted = ref(false);
+const store = useAccountStore();
+const props = defineProps(["todo"]);
+console.log(props.todo.todos);
 </script>
 
 <template>
   <div
     class="relative flex flex-col bg-blue-400 shadow-xl p-2 rounded-xl transition duration-1000 hover:cursor-pointer ring-2 ring-blue-400"
-    @click="isCompleted = !isCompleted"
+    @click="store.toggleCompleted(todo.id)"
   >
     <div
       :class="{
@@ -18,15 +22,14 @@ const isCompleted = ref(false);
       <h3
         :class="{ 'line-through': isCompleted, 'text-red-300': !isCompleted }"
       >
-        Title
+        {{ todo.title }}
       </h3>
       <p>
-        Description Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Corrupti, perspiciatis?
+        {{ todo.description }}
       </p>
-      <p class="font-semibold">Created Date</p>
-      <p class="font-semibold">Created By</p>
-      <p>Assigned to:</p>
+      <p class="font-semibold">Created Date: {{ todo.createdDate }}</p>
+      <p class="font-semibold">Created By: {{ todo.isCompleted }}</p>
+      <!-- <p>Assigned to: {{ todo.appUser.userName }}</p> -->
       <input
         type="checkbox"
         name="isCompleted"
@@ -50,5 +53,3 @@ const isCompleted = ref(false);
     </p>
   </div>
 </template>
-
-<style scoped></style>

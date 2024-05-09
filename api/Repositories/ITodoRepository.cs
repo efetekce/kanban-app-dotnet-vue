@@ -10,6 +10,9 @@ namespace api.Repositories
     {
         Task<List<Todo>> GetAllAsync();
         Task<List<Todo>> GetAllByTeamIdAsync(int teamId);
+        Task<Todo> CreateAsync(Todo todo);
+
+        Task<Todo?> ToggleCompleted(int id, Todo todo);
         Task<List<Todo>> GetAllByAppUserIdAsync(string appUserId);
     }
 }

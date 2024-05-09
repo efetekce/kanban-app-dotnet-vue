@@ -1,4 +1,5 @@
 <script setup>
+import { RouterView } from "vue-router";
 import Dashboard from "./components/Dashboard.vue";
 import { useAccountStore } from "./store";
 import HomeView from "./views/HomeView.vue";
@@ -7,6 +8,5 @@ const store = useAccountStore();
 </script>
 
 <template>
-  <HomeView v-if="store.isLoggedIn" />
-  <LoginView v-else />
+  <RouterView />
 </template>

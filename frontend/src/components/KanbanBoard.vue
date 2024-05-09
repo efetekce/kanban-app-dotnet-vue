@@ -1,15 +1,15 @@
 <script setup>
+import { useAccountStore } from "../store";
 import KanbanCard from "./KanbanCard.vue";
 defineProps(["title"]);
-// const loading = ref(false);
+
+const store = useAccountStore();
 </script>
 
 <template>
   <div class="gap-4 grid grid-cols-1 bg-teal-400 p-4 rounded-xl">
     {{ title }}
-    <KanbanCard />
-    <KanbanCard />
-    <KanbanCard />
+    <KanbanCard v-for="todo in store.todos" :todo="todo" />
   </div>
 </template>
 

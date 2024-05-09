@@ -4,12 +4,23 @@ import { useRouter } from "vue-router";
 
 export const useAccountStore = defineStore("account", () => {
   const isLoggedIn = ref(false);
-
+  const router = useRouter();
   const account = reactive({
     username: "",
     email: "",
     token: "",
   });
+  const todos = ref([]);
+
+  const toggleCompleted = async (id) => {
+    try {
+      console.log(id);
+      const response = await fetch(`http://localhost:5108/api/todo/${id}`);
+      console.log(response.json());
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const accountRegister = () => {
     fetch("http://localhost:5108/api/account/login", {
@@ -28,10 +39,33 @@ export const useAccountStore = defineStore("account", () => {
         }),
       });
       const data = await response.json();
-      console.log(data);
+      // console.log(response);
       account.email = data.email;
       account.token = data.token;
       account.username = data.username;
+      isLoggedIn.value = true;
+
+      if (response.status === 200) router.push("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getTodos = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:5108/api/todo/getallbyteamid",
+        {
+          method: "get",
+          headers: {
+            Authorization: `Bearer ${account.token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      console.log(data[0].todos);
+      todos.value = data;
     } catch (error) {
       console.error(error);
     }
@@ -39,6 +73,16 @@ export const useAccountStore = defineStore("account", () => {
 
   const accountLogout = () => {
     account = {};
+    router.push("/login");
   };
-  return { account, accountLogin, accountRegister, accountLogout, isLoggedIn };
+  return {
+    account,
+    accountLogin,
+    accountRegister,
+    accountLogout,
+    getTodos,
+    isLoggedIn,
+    todos,
+    toggleCompleted,
+  };
 });

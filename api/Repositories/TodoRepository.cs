@@ -17,9 +17,17 @@ namespace api.Repositories
             _context = context;
         }
 
-        public  Task<List<Todo>> GetAllAsync()
+        public async Task<Todo> CreateAsync(Todo todo)
         {
-            return  _context.Todos.ToListAsync();
+            todo.CreatedDate = DateTime.Now;
+            await _context.Todos.AddAsync(todo);
+            await _context.SaveChangesAsync();
+            return todo;
+        }
+
+        public Task<List<Todo>> GetAllAsync()
+        {
+            return _context.Todos.ToListAsync();
         }
 
         public Task<List<Todo>> GetAllByAppUserIdAsync(string appUserId)
@@ -30,6 +38,21 @@ namespace api.Repositories
         public Task<List<Todo>> GetAllByTeamIdAsync(int teamId)
         {
             return _context.Todos.Where(t => t.TeamId == teamId).ToListAsync();
+        }
+
+        public async Task<Todo?> ToggleCompleted(int id, Todo todo)
+        {
+            var existingTodo = await _context.Todos.FirstOrDefaultAsync(x => x.Id == id);
+            if (!(existingTodo == null))
+            {
+                existingTodo.IsCompleted = true;
+                existingTodo.CompletedDate = DateTime.Now;
+
+                await _context.SaveChangesAsync();
+                return existingTodo;
+            }
+            return null;
+
         }
     }
 }

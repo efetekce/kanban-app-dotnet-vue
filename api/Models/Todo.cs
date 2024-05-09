@@ -14,7 +14,8 @@ namespace api.Models
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
         public Boolean IsCompleted { get; set; }
-        public DateTime CompletedDate { get; set; }
+        public DateTime? CompletedDate { get; set; }
+
 
 
         public Team? Team { get; set; }
