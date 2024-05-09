@@ -1,9 +1,36 @@
 <script setup>
-const loading = ref(false);
+import { ref } from "vue";
+import { useAccountStore } from "../store";
+
+const submitHandler = () => {};
+const store = useAccountStore();
+const username = ref();
+const password = ref();
 </script>
 
 <template>
-  <div>hello LoginView</div>
-</template>
+  <div class="place-items-center grid mx-auto min-h-screen container">
+    <form
+      @submit.prevent="store.accountLogin({ username, password })"
+      class="flex flex-col justify-evenly items-center gap-2 bg-slate-500 p-4 rounded-xl w-1/2"
+    >
+      <label for="username">Username</label>
 
-<style scoped></style>
+      <input
+        type="text"
+        id="username"
+        v-model="username"
+        class="bg-slate-200 p-2 rounded-lg w-3/4 outline-2 outline-blue-400"
+      />
+
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        v-model="password"
+        class="bg-slate-200 p-2 rounded-lg w-3/4 outline-2 outline-blue-400"
+      />
+      <button class="bg-amber-200 w-1/3">Login</button>
+    </form>
+  </div>
+</template>
