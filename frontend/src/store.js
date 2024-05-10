@@ -64,7 +64,7 @@ export const useAccountStore = defineStore("account", () => {
         }
       );
       const data = await response.json();
-      console.log(data[0].todos);
+      console.log(data);
       todos.value = data;
     } catch (error) {
       console.error(error);

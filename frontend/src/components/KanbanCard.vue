@@ -4,14 +4,14 @@ import { useAccountStore } from "../store";
 
 const isCompleted = ref(false);
 const store = useAccountStore();
-defineProps(["todo"]);
-// console.log(props.todo.todos);
+const props = defineProps(["todo"]);
+console.log(props.todo);
 </script>
 
 <template>
   <div
     class="relative flex flex-col bg-blue-400 shadow-xl p-2 rounded-xl transition duration-1000 hover:cursor-pointer ring-2 ring-blue-400"
-    @click="store.toggleCompleted(todo.id)"
+    @click="isCompleted = !isCompleted"
   >
     <div
       :class="{
@@ -20,18 +20,18 @@ defineProps(["todo"]);
       }"
     >
       <h3
-        :class="{ 'line-through': isCompleted, 'text-red-300': !isCompleted }"
+        :class="{ 'line-through': isCompleted, 'text-slate-300': !isCompleted }"
       >
-        {{ todo[0].title }}
+        {{ todo.title }}
       </h3>
       <p>
-        {{ todo[1].description }}
+        {{ todo.description }}
       </p>
       <p class="font-semibold">
-        Created Date: {{ new Date(todo[0].createdDate).toDateString() }}
+        Created Date: {{ new Date(todo.createdDate).toDateString() }}
       </p>
-      <p class="font-semibold">Created By: {{ todo[0] }}</p>
-      <p>Assigned to: {{ todo[0] }}</p>
+      <p class="font-semibold">Created By: {{ todo.appUser.userName }}</p>
+      <p>Assigned to: {{ todo.team.name }}</p>
       <input
         type="checkbox"
         name="isCompleted"
@@ -54,6 +54,4 @@ defineProps(["todo"]);
       }}</span>
     </p>
   </div>
-
-  {{ store.todos }}
 </template>

@@ -15,7 +15,11 @@ namespace api.Repositories
         {
             _context = context;
         }
+        public async Task<Team?> GetByIdAsync(int id)
+        {
+            return await _context.Teams.FirstOrDefaultAsync(i => i.Id == id);
 
+        }
         public async Task<List<Team>> GetAllAsync()
         {
             return await _context.Teams.ToListAsync();

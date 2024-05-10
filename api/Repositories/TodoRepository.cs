@@ -40,6 +40,12 @@ namespace api.Repositories
             return _context.Todos.Where(t => t.TeamId == teamId).ToListAsync();
         }
 
+        public async Task<Todo?> GetByIdAsync(int id)
+        {
+            return await _context.Todos.FirstOrDefaultAsync(i => i.Id == id);
+            // return await _context.Todos.Include(c => c.Comments).FirstOrDefaultAsync(i => i.Id == id);
+        }
+
         public async Task<Todo?> ToggleCompleted(int id, Todo todo)
         {
             var existingTodo = await _context.Todos.FirstOrDefaultAsync(x => x.Id == id);

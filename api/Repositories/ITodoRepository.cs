@@ -9,6 +9,8 @@ namespace api.Repositories
     public interface ITodoRepository
     {
         Task<List<Todo>> GetAllAsync();
+        Task<Todo?> GetByIdAsync(int id);
+
         Task<List<Todo>> GetAllByTeamIdAsync(int teamId);
         Task<Todo> CreateAsync(Todo todo);
 
