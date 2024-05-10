@@ -4,8 +4,8 @@ import { useAccountStore } from "../store";
 
 const isCompleted = ref(false);
 const store = useAccountStore();
-const props = defineProps(["todo"]);
-console.log(props.todo.todos);
+defineProps(["todo"]);
+// console.log(props.todo.todos);
 </script>
 
 <template>
@@ -22,14 +22,16 @@ console.log(props.todo.todos);
       <h3
         :class="{ 'line-through': isCompleted, 'text-red-300': !isCompleted }"
       >
-        {{ todo.title }}
+        {{ todo[0].title }}
       </h3>
       <p>
-        {{ todo.description }}
+        {{ todo[1].description }}
       </p>
-      <p class="font-semibold">Created Date: {{ todo.createdDate }}</p>
-      <p class="font-semibold">Created By: {{ todo.isCompleted }}</p>
-      <!-- <p>Assigned to: {{ todo.appUser.userName }}</p> -->
+      <p class="font-semibold">
+        Created Date: {{ new Date(todo[0].createdDate).toDateString() }}
+      </p>
+      <p class="font-semibold">Created By: {{ todo[0] }}</p>
+      <p>Assigned to: {{ todo[0] }}</p>
       <input
         type="checkbox"
         name="isCompleted"
@@ -52,4 +54,6 @@ console.log(props.todo.todos);
       }}</span>
     </p>
   </div>
+
+  {{ store.todos }}
 </template>

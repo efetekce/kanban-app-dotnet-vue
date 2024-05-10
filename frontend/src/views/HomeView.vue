@@ -2,8 +2,11 @@
 import { onMounted } from "vue";
 import App from "../App.vue";
 import Dashboard from "../components/Dashboard.vue";
+import Navbar from "../components/Navbar.vue";
 </script>
 
 <template>
-  <Dashboard class="min-h-screen" />
+  <div>
+    <Dashboard class="min-h-screen" />
+  </div>
 </template>
