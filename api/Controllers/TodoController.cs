@@ -93,15 +93,12 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<IActionResult> ToggleCompleted([FromRoute] int id, [FromBody] Todo todo)
+        public async Task<IActionResult> ToggleCompleted([FromRoute] int id)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var result = await _todoRepository.ToggleCompleted(id, todo);
+            var result = await _todoRepository.ToggleCompleted(id);
 
-            if (todo == null)
-            {
-                return NotFound();
-            }
+
 
 
             return Ok(result);

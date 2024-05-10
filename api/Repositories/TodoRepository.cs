@@ -46,13 +46,20 @@ namespace api.Repositories
             // return await _context.Todos.Include(c => c.Comments).FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public async Task<Todo?> ToggleCompleted(int id, Todo todo)
+        public async Task<Todo?> ToggleCompleted(int id)
         {
             var existingTodo = await _context.Todos.FirstOrDefaultAsync(x => x.Id == id);
             if (!(existingTodo == null))
             {
-                existingTodo.IsCompleted = true;
-                existingTodo.CompletedDate = DateTime.Now;
+                existingTodo.IsCompleted = !existingTodo.IsCompleted;
+                if (existingTodo.IsCompleted)
+                {
+                    existingTodo.CompletedDate = DateTime.Now;
+                }
+                else
+                {
+                    existingTodo.CompletedDate = null;
+                }
 
                 await _context.SaveChangesAsync();
                 return existingTodo;

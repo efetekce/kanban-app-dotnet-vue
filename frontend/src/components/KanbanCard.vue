@@ -1,17 +1,20 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { useAccountStore } from "../store";
 
-const isCompleted = ref(false);
+const { todo } = defineProps(["todo"]);
 const store = useAccountStore();
-const props = defineProps(["todo"]);
-console.log(props.todo);
+const isCompleted = ref(computed(() => todo.isCompleted));
+
+watchEffect(() => {
+  todo.
+})
 </script>
 
 <template>
   <div
     class="relative flex flex-col bg-blue-400 shadow-xl p-2 rounded-xl transition duration-1000 hover:cursor-pointer ring-2 ring-blue-400"
-    @click="isCompleted = !isCompleted"
+    @click="store.toggleCompleted(todo.id)"
   >
     <div
       :class="{

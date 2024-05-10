@@ -15,8 +15,12 @@ export const useAccountStore = defineStore("account", () => {
   const toggleCompleted = async (id) => {
     try {
       console.log(id);
-      const response = await fetch(`http://localhost:5108/api/todo/${id}`);
-      console.log(response.json());
+      const response = await fetch(`http://localhost:5108/api/todo/${id}`, {
+        method: "put",
+      });
+      // console.log(response);
+      const data = await response.json();
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
