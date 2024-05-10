@@ -11,8 +11,19 @@ const store = useAccountStore();
 <template>
   <div class="gap-4 grid grid-cols-1 bg-teal-400 p-4 rounded-xl">
     {{ title }}
-
-    <KanbanCard v-for="todo in store.todos" :todo="todo" />
+    <!-- {{ title === "Todo" ? store.todos.filter((t) => !t.isCompleted) : null }} -->
+    <div v-if="title === 'Todo'">
+      <KanbanCard
+        v-for="todo in store.todos.filter((t) => !t.isCompleted)"
+        :todo="todo"
+      />
+    </div>
+    <div v-else>
+      <KanbanCard
+        v-for="todo in store.todos.filter((t) => t.isCompleted)"
+        :todo="todo"
+      />
+    </div>
   </div>
 </template>
 

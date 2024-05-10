@@ -13,7 +13,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="place-items-center gap-4 grid grid-cols-2 m-auto max-w-5xl container"
+    class="place-items-center gap-4 grid grid-cols-1 m-auto max-w-5xl container"
   >
     <KanbanBoard v-for="item in items" :title="item.title" />
   </div>

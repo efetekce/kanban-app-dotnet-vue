@@ -4,17 +4,13 @@ import { useAccountStore } from "../store";
 
 const { todo } = defineProps(["todo"]);
 const store = useAccountStore();
-const isCompleted = ref(computed(() => todo.isCompleted));
-
-watchEffect(() => {
-  todo.
-})
+const isCompleted = computed(() => todo.isCompleted);
+console.log(isCompleted.value);
 </script>
 
 <template>
   <div
     class="relative flex flex-col bg-blue-400 shadow-xl p-2 rounded-xl transition duration-1000 hover:cursor-pointer ring-2 ring-blue-400"
-    @click="store.toggleCompleted(todo.id)"
   >
     <div
       :class="{
@@ -38,11 +34,12 @@ watchEffect(() => {
       <input
         type="checkbox"
         name="isCompleted"
-        v-model="isCompleted"
+        v-model="todo.isCompleted"
         class="top-2 right-2 absolute cursor-pointer size-5"
+        @change="store.toggleCompleted(todo.id)"
       />
     </div>
-    <p v-if="isCompleted" class="">
+    <p v-if="todo.isCompleted" class="">
       Completed On:
 
       <span>{{
